@@ -5,9 +5,29 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-sans);
   color: #1a1a1a;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+  /* Add hardware acceleration */
+  will-change: transform;
+}
+
+/* Pause animation on hover */
+.carousel-container:hover .animate-scroll {
+  animation-play-state: paused;
 }

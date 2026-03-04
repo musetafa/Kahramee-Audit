@@ -1,56 +1,55 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion } from 'motion/react';
 import { auditData, Category, Finding } from './data';
-import { IphoneMockup } from './components/IphoneMockup';
 import { SeverityBadge } from './components/SeverityBadge';
 import { GridBackground } from './components/GridBackground';
+import { ContextSection } from './components/ContextSection';
+import { HeroCarousel } from './components/HeroCarousel';
 import { ArrowDown, Zap } from 'lucide-react';
 
 const Navbar = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-[#f4f5f4]/80 backdrop-blur-md border-b border-black/5">
-    <div className="flex items-center gap-2">
-      <div className="w-8 h-8 bg-black rounded flex items-center justify-center">
-        <Zap className="text-white w-4 h-4" />
+  <nav className="fixed top-0 left-0 right-0 z-50 bg-[#f4f5f4]/80 backdrop-blur-md border-b border-black/5">
+    <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <img src="/logos/ey_logo.svg" alt="EY Logo" className="h-[36px] w-auto" />
+        <img src="/logos/Kahramaa_logo.svg" alt="Kahramaa Logo" className="h-[36px] w-auto" />
       </div>
-      <span className="font-semibold tracking-tight">UX Audit</span>
+      <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+        <a href="#context" className="hover:text-black transition-colors">Context & Methodology</a>
+        <a href="#experience-task-execution" className="hover:text-black transition-colors">Findings</a>
+      </div>
     </div>
-    <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-      <a href="#experience-task-execution" className="hover:text-black transition-colors">Experience</a>
-      <a href="#flow-logic-system-architecture" className="hover:text-black transition-colors">Flow</a>
-      <a href="#visual-design-brand-expression" className="hover:text-black transition-colors">Visual</a>
-    </div>
-    <button className="bg-[#e2ff3d] text-black px-6 py-2 rounded-full font-medium hover:bg-[#d4f52d] transition-colors shadow-sm">
-      Download PDF
-    </button>
   </nav>
 );
 
 const Hero = () => {
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6 text-center z-10">
+    <section className="relative flex flex-col items-center justify-center pt-32 pb-20 overflow-hidden min-h-screen">
+      <div className="max-w-5xl mx-auto px-6 text-center z-10 w-full flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-12 flex flex-col items-center"
         >
+          <div className="bg-[#FFE600] text-black px-4 py-1.5 rounded-full text-sm font-semibold tracking-widest uppercase mb-6 shadow-sm border border-black/5">
+            UX/UI Audit
+          </div>
           <h1 className="text-6xl md:text-8xl font-medium tracking-tighter leading-[0.9] mb-6">
-            Kahramaa App <br />
-            <span className="text-gray-400">UX/UI Audit</span>
+            Kahramaa App
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto mb-12 font-light">
-            A comprehensive review of the mobile experience, identifying critical friction points and opportunities for modernization.
+          <p className="text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto font-light">
+            A targeted, heuristic evaluation of the core user journey, identifying critical friction points and actionable opportunities for modernization.
           </p>
         </motion.div>
+        
+        <HeroCarousel />
         
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="flex justify-center"
+          className="flex justify-center mt-12"
         >
           <a href="#experience-task-execution" className="flex flex-col items-center gap-2 text-gray-400 hover:text-black transition-colors">
             <span className="text-sm font-medium uppercase tracking-widest">Explore Findings</span>
@@ -58,11 +57,6 @@ const Hero = () => {
           </a>
         </motion.div>
       </div>
-      
-      {/* Decorative background elements */}
-      <motion.div style={{ y }} className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center opacity-10">
-        <div className="w-[800px] h-[800px] bg-gradient-to-tr from-[#e2ff3d] to-transparent rounded-full blur-3xl" />
-      </motion.div>
     </section>
   );
 };
@@ -74,12 +68,12 @@ const FindingCard: React.FC<{ finding: Finding; index: number }> = ({ finding, i
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="bg-white/90 backdrop-blur-xl border border-black/5 rounded-[2rem] p-8 md:p-10 shadow-sm relative overflow-hidden group"
+      className="bg-white/90 backdrop-blur-xl border border-black/5 rounded-[2px] p-8 md:p-10 shadow-sm relative overflow-hidden group"
     >
       {/* Connecting line dot */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-gray-300 -ml-1 hidden lg:block" />
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-[2px] bg-gray-300 -ml-1 hidden lg:block" />
       
-      <div className="flex flex-col lg:flex-row gap-12 items-center">
+      <div className="flex flex-col lg:flex-row gap-12 items-start">
         <div className="flex-1 space-y-8">
           <div>
             <SeverityBadge severity={finding.severity} />
@@ -98,15 +92,19 @@ const FindingCard: React.FC<{ finding: Finding; index: number }> = ({ finding, i
               <p className="text-gray-600 leading-relaxed">{finding.whyItMatters}</p>
             </div>
             
-            <div className="bg-[#f4f5f4] p-6 rounded-2xl border border-black/5">
+            <div className="bg-[#f4f5f4] p-6 rounded-[2px] border border-black/5">
               <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Direction</h4>
               <p className="text-gray-900 font-medium leading-relaxed">{finding.direction}</p>
             </div>
           </div>
         </div>
         
-        <div className="w-full lg:w-auto flex justify-center">
-          <IphoneMockup src={finding.screenshotUrl} alt={finding.title} />
+        <div className="w-full lg:w-auto flex justify-center shrink-0">
+          <img 
+            src={finding.screenshotUrl} 
+            alt={finding.title} 
+            className="w-full max-w-[320px] h-auto object-contain rounded-[2px]"
+          />
         </div>
       </div>
     </motion.div>
@@ -145,26 +143,22 @@ const CategorySection: React.FC<{ category: Category }> = ({ category }) => {
 };
 
 const Footer = () => (
-  <footer className="bg-black text-white py-24 mt-24">
-    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-      <div>
-        <h2 className="text-3xl font-medium tracking-tight mb-2">Ready to transform your app?</h2>
-        <p className="text-gray-400">Let's turn these findings into a world-class experience.</p>
-      </div>
-      <button className="bg-[#e2ff3d] text-black px-8 py-4 rounded-full font-medium hover:bg-[#d4f52d] transition-colors text-lg">
-        Start a Project
-      </button>
+  <footer className="bg-[#f4f5f4] border-t border-black/5 py-24 mt-24">
+    <div className="max-w-7xl mx-auto px-6 flex justify-center items-center">
+      <img src="/logos/ey_logo.svg" alt="EY Logo" className="h-16 w-auto" />
     </div>
   </footer>
 );
 
 export default function App() {
   return (
-    <div className="min-h-screen text-gray-900 selection:bg-[#e2ff3d] selection:text-black">
+    <div className="min-h-screen text-gray-900 selection:bg-[#FFE600] selection:text-black">
       <GridBackground />
       <Navbar />
       <Hero />
       
+      <ContextSection />
+
       <main>
         {auditData.map((category) => (
           <CategorySection key={category.id} category={category} />

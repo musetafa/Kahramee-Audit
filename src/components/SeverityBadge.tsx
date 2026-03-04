@@ -37,7 +37,7 @@ export const SeverityBadge: React.FC<SeverityBadgeProps> = ({ severity }) => {
   const { color, icon } = config[severity];
 
   return (
-    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${color}`}>
+    <span className={`inline-flex items-center px-2.5 py-1 rounded-[2px] text-xs font-semibold border ${color}`}>
       {icon}
       {severity}
     </span>
