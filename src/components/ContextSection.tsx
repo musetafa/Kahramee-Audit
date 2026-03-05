@@ -1,35 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MeshGradient } from '@paper-design/shaders-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const ContextSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 });
-  const [mounted, setMounted] = useState(false);
   
-  useEffect(() => {
-    setMounted(true);
-    const update = () => {
-      if (sectionRef.current) {
-        setDimensions({
-          width: sectionRef.current.offsetWidth,
-          height: sectionRef.current.offsetHeight,
-        });
-      } else {
-        setDimensions({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      }
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Fade up elements sequentially
@@ -68,24 +45,14 @@ export const ContextSection: React.FC = () => {
       id="context"
     >
       {/* Animated Background */}
-      <div className="absolute inset-0 z-0">
-        {mounted && (
-          <>
-            <MeshGradient
-              width={dimensions.width}
-              height={dimensions.height}
-              colors={["#72b9bb", "#b5d9d9", "#ffd1bd", "#ffebe0", "#8cc5b8", "#dbf4a4"]}
-              distortion={0.8}
-              swirl={0.6}
-              grainMixer={0}
-              grainOverlay={0}
-              speed={0.42}
-              offsetX={0.08}
-            />
-            <div className="absolute inset-0 pointer-events-none bg-white/20" />
-          </>
-        )}
-      </div>
+      <div 
+        className="absolute inset-0 z-0 animate-gradient"
+        style={{
+          background: "linear-gradient(120deg, #72b9bb, #b5d9d9, #ffd1bd, #ffebe0, #8cc5b8, #dbf4a4)",
+          backgroundSize: "300% 300%"
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none bg-white/20 z-0" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
